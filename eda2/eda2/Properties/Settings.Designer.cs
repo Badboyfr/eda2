@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace eda2.Properties
+namespace stolich.Properties
 {
 
 

