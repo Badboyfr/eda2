@@ -16,7 +16,7 @@ $rsa = new Crypt_RSA();
 $rsa->setPrivateKeyFormat(CRYPT_RSA_PRIVATE_FORMAT_XML);
 $rsa->setPublicKeyFormat(CRYPT_RSA_PUBLIC_FORMAT_XML);
 
-extract($rsa->createKey(2048));
+extract($rsa->createKey(4096));
 
 $pcname = $_POST['pcname']; 
 $username = $_POST['username']; 
@@ -29,7 +29,6 @@ $stmt->execute([
 	$username,
 	$privatekey
 ]);
-
 
 //var_dump($privatekey);
 
