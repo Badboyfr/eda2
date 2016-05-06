@@ -1,2 +1,4 @@
 language: csharp
-solution: ./stolich/stolich.sln
+before-script: 
+  - cd stolich
+solution: stolich.sln
