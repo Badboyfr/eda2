@@ -1,4 +1,4 @@
 language: csharp
-before-script: 
+script: 
   - cd stolich
-solution: stolich.sln
+  - nuget restore stolich.sln
