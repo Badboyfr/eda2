@@ -1,4 +1,4 @@
 language: csharp
 script: 
   - cd stolich
-  - nuget restore stolich.sln
+  - nuget restore Stolich.sln
