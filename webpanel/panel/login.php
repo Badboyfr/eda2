@@ -2,16 +2,13 @@
 
 session_start();
 
-//Username:test
-//Password:test
-
 if(!empty($_POST)) {
 	$isim = $_POST['login'];
 	$sifre = $_POST['password'];
 	
 	var_dump($isim, $sifre);
 	
-	if($isim == 'test' && password_verify($sifre, '$2y$10$ZzV6jDI5HU.SUrpx0AFoQe9r49NI.NkpH5OhZ28Ug4G0MnmdVKaFy')) {
+	if($isim == 'brainblown' && password_verify($sifre, '$2y$10$BMcEdz4fj897MYrCz4nLVOD65beG4oxGi8x.v2FGhBh9Ad0yXX33W')) {
 		$_SESSION['auth'] = 1;
 	    
 	    header('Location: main.php');

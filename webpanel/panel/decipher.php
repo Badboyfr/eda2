@@ -13,5 +13,6 @@ $privatekey = $_POST['privatekey'];
 $ciphertext = $_POST['aesencrypted'];
 $rsa->setEncryptionMode(CRYPT_RSA_ENCRYPTION_PKCS1);
 $rsa->loadKey($privatekey);
-//echo $privatekey;
 echo $rsa->decrypt(base64_decode($ciphertext));
+
+?>

