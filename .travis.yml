@@ -1,2 +1,2 @@
 language: csharp
-solution: stolich/stolich.sln
+solution: ./stolich/stolich.sln
